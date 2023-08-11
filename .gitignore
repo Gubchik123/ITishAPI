@@ -1,0 +1,13 @@
+__pycache__/
+*/__pycache__/
+
+media/
+migration/
+
+alembic.ini
+
+sql_app.db
+
+.env
+
+.vscode/
