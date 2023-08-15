@@ -62,7 +62,7 @@ def get_all_post_comments(slug: str, db: Session = Depends(get_db)):
 @catch_model_not_fount(model="Post")
 def get_all_post_likes(slug: str, db: Session = Depends(get_db)):
     """Returns post from database by slug."""
-    return crud.get_post_by_slug(db, slug).likes.all()
+    return [like.user_id for like in crud.get_post_by_slug(db, slug).likes]
 
 
 @blog_router.put("/post/{slug}")
