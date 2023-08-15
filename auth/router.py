@@ -38,6 +38,7 @@ def login(
             status_code=400, detail="Incorrect email or password"
         )
     return {
+        "user_id": user.id,
         "access_token": utils.create_access_token(user.email),
         "refresh_token": utils.create_refresh_token(user.email),
     }

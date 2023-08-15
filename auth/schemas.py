@@ -6,6 +6,7 @@ from user.schemas import UserSchema
 class TokenSchema(BaseModel):
     """Schema for token response"""
 
+    user_id: int
     access_token: str
     refresh_token: str
 
