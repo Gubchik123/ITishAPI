@@ -2,9 +2,9 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, Body
 from fastapi.exceptions import HTTPException
 
-from models import User
 from blog import crud, schemas
 from dependencies import get_db
+from models import User, Comment
 from decorators import catch_model_not_fount
 from auth.dependencies import get_current_user
 
@@ -51,7 +51,11 @@ def get_post_by_slug(slug: str, db: Session = Depends(get_db)):
 @catch_model_not_fount(model="Post")
 def get_all_post_comments(slug: str, db: Session = Depends(get_db)):
     """Returns post from database by slug."""
-    return crud.get_post_by_slug(db, slug).comments.all()
+    return (
+        crud.get_post_by_slug(db, slug)
+        .comments.order_by(Comment.id.desc())
+        .all()
+    )
 
 
 @blog_router.get("/post/{slug}/likes")
