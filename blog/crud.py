@@ -1,8 +1,8 @@
 from typing import NoReturn
 
 from fastapi import HTTPException
-from sqlalchemy.orm import Session
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm import Session, joinedload
 
 import models
 from blog import schemas, services
@@ -59,7 +59,12 @@ def get_all_tags(db: Session, query: str):
 
 def get_post_by_slug(db: Session, slug: str):
     """Returns post from database by slug."""
-    post = db.query(models.Post).filter(models.Post.slug == slug).first()
+    post = (
+        db.query(models.Post)
+        .filter(models.Post.slug == slug)
+        .options(joinedload(models.Post.tags))
+        .first()
+    )
     if post is None:
         raise NoResultFound
     return post
