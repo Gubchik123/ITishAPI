@@ -6,6 +6,14 @@ from user.schemas import UserSchema
 from auth.utils import get_hashed_password
 
 
+def get_user_by_id(db: Session, id: int):
+    """Returns user from database by id."""
+    user = db.query(models.User).filter_by(id=id).first()
+    if user is None:
+        raise NoResultFound
+    return user
+
+
 def get_user_by_username(db: Session, user: str):
     """Returns user from database by username."""
     if isinstance(user, models.User):
