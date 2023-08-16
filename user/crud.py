@@ -29,7 +29,11 @@ def update_user(db: Session, username: str, user_schema: UserSchema):
     user = get_user_by_username(db, username)
     user.username = user_schema.username
     user.email = user_schema.email
-    user.password = get_hashed_password(user_schema.password)
+    user.password = (
+        user.password
+        if len(user_schema.password) == 60
+        else get_hashed_password(user_schema.password)
+    )
     db.commit()
     return user
 
