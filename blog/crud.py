@@ -39,6 +39,7 @@ def _get_all_posts_by_query(db: Session, query: str):
     return (
         db.query(models.Post)
         .filter(models.Post.title.ilike(f"%{query}%"))
+        .order_by(models.Post.id.desc())
         .all()
     )
 
@@ -46,7 +47,7 @@ def _get_all_posts_by_query(db: Session, query: str):
 def get_all_posts(db: Session, query: str):
     """Returns all posts from database."""
     return (
-        db.query(models.Post).all()
+        db.query(models.Post).order_by(models.Post.id.desc()).all()
         if not query
         else _get_all_posts_by_query(db, query)
     )
