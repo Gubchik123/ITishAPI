@@ -27,7 +27,7 @@ def create_comment(db: Session, comment_schema: schemas.CommentSchema):
 
 def create_like(db: Session, like_schema: schemas.LikeSchema):
     """Creates like in database and returns it."""
-    like = models.Comment(**like_schema.dict())
+    like = models.Like(**like_schema.dict())
     return add_commit_and_refresh(db, like)
 
 
@@ -155,9 +155,18 @@ def delete_comment(db: Session, comment_id: int, current_user_id: int):
     return _delete_and_commit(db, comment)
 
 
-def delete_like(db: Session, like_id: int, current_user_id: int):
+def delete_like(
+    db: Session, like_schema: schemas.LikeSchema, current_user_id: int
+):
     """Deletes like from database and returns it."""
-    like = db.query(models.Like).filter(models.Like.id == like_id).first()
+    like = (
+        db.query(models.Like)
+        .filter(
+            models.Like.post_id == like_schema.post_id,
+            models.Like.user_id == like_schema.user_id,
+        )
+        .first()
+    )
     if like is None:
         raise NoResultFound
     check_if_current_user_if_owner(like.user_id, current_user_id)

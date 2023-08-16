@@ -38,4 +38,4 @@ class LikeSchema(BaseModel):
     """Like schema."""
 
     post_id: int
-    user_id: int = None
+    user_id: int

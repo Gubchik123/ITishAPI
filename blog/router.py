@@ -140,15 +140,14 @@ def create_like(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    like_schema.user_id = user.id
     return crud.create_like(db, like_schema)
 
 
 @blog_router.delete("/like")
 @catch_model_not_fount(model="Like")
 def delete_like(
-    like_id: int = Body(...),
+    like_schema: schemas.LikeSchema,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    return crud.delete_like(db, like_id, user.id)
+    return crud.delete_like(db, like_schema, user.id)
