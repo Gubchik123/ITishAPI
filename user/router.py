@@ -68,6 +68,14 @@ def update_user(
     return crud.update_user(db, user, user_schema)
 
 
+@user_router.get("/me/avatar")
+@catch_model_not_fount("User")
+def get_current_user_avatar(id: int, db: Session = Depends(get_db)):
+    """Returns user avatar by id."""
+    user = crud.get_user_by_id(db, id)
+    return FileResponse(user.avatar)
+
+
 @user_router.put("/me/avatar")
 @catch_model_not_fount("User")
 def update_user_avatar(
