@@ -124,11 +124,11 @@ def update_comment(
 @blog_router.delete("/comment")
 @catch_model_not_fount(model="Comment")
 def delete_comment(
-    comment_id: int = Body(...),
+    comment_delete_schema: schemas.CommentDeleteSchema,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    return crud.delete_comment(db, comment_id, user.id)
+    return crud.delete_comment(db, comment_delete_schema.id, user.id)
 
 
 # * Like ----------------------------------------------------------------------

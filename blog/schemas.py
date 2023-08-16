@@ -34,6 +34,12 @@ class CommentUpdateSchema(BaseModel):
     body: str
 
 
+class CommentDeleteSchema(BaseModel):
+    """Comment delete schema."""
+
+    id: int
+
+
 class LikeSchema(BaseModel):
     """Like schema."""
 
