@@ -7,7 +7,7 @@ from passlib.context import CryptContext
 
 
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30  # 30 minutes
+ACCESS_TOKEN_EXPIRE_MINUTES = 60  # 60 minutes
 REFRESH_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 JWT_SECRET_KEY = str(os.getenv("JWT_SECRET_KEY"))
 JWT_REFRESH_SECRET_KEY = str(os.getenv("JWT_REFRESH_SECRET_KEY"))
