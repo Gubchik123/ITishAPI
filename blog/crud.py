@@ -113,7 +113,6 @@ def update_post(
     check_if_current_user_if_owner(post.user_id, current_user_id)
 
     post.title = post_schema.title
-    post.slug = post.generate_slug()
     post.body = post_schema.body
     post.tags = services._get_all_tags_for_post_from_(post_schema, db)
     return commit_and_refresh(db, post)
